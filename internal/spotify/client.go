@@ -14,8 +14,9 @@ import (
 )
 
 var (
-	redirectURI = "http://127.0.0.1:8080/auth/spotify/callback"
-	spotifyURL  = "https://api.spotify.com/v1"
+	redirectURI        = "http://127.0.0.1:8080/auth/spotify/callback"
+	spotifyAPIURL      = "https://api.spotify.com/v1"
+	spotifyAccountsURL = "https://accounts.spotify.com"
 )
 
 type Client struct {
@@ -37,7 +38,7 @@ func NewClient(
 }
 
 func (c *Client) GetAuthURL(state string) string {
-	u, _ := url.Parse("https://accounts.spotify.com/authorize")
+	u, _ := url.Parse(spotifyAccountsURL + "/authorize")
 	u.RawQuery = url.Values{
 		"client_id":     {c.env.SpotifyClientID},
 		"response_type": {"code"},
@@ -63,7 +64,7 @@ func (c *Client) GetTokens(
 	req, err := http.NewRequestWithContext(
 		ctx,
 		http.MethodPost,
-		spotifyURL+"/token",
+		spotifyAccountsURL+"/api/token",
 		strings.NewReader(form),
 	)
 	if err != nil {
@@ -133,7 +134,7 @@ func (c *Client) SearchByName(
 		"type": {"track"},
 	}.Encode()
 
-	url := spotifyURL + "/search?" + params
+	url := spotifyAPIURL + "/search?" + params
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
