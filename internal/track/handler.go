@@ -30,7 +30,7 @@ func (h *handler) SearchByName(w http.ResponseWriter, r *http.Request) {
 
 	name := r.URL.Query().Get("name")
 	if name == "" {
-		slog.Error("failed to search track without required query param name")
+		slog.Error("error query param name is required")
 		util.Resp(w, http.StatusBadRequest, "query param name is required")
 		return
 	}

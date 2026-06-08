@@ -27,7 +27,7 @@ func main() {
 	trackService := track.NewService(spotify)
 
 	authHandler := auth.NewHandler(spotify, sessionStore)
-	trackHandler := track.New(trackService)
+	trackHandler := track.NewHandler(trackService)
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /auth/spotify", authHandler.HandleSpotify)
