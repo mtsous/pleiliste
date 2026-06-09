@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.png">
+    <script src="/static/htmx.min.js"></script>
+    <title>{{.Title}} - Pleiliste</title>
+</head>
+<body>
+    <label for="#search-input">Buscar</label>
+    <input
+        id="search-input"
+        type="text"
+        name="name"
+        hx-get="/tracks"
+        hx-trigger="keyup changed delays:1s"
+        hx-target="#result"
+        placeholder="Digite o nome de uma faixa..."
+    >
+
+    <div id="result"></div>
+</body>
+</html>

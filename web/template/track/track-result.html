@@ -1,0 +1,15 @@
+{{define "track-result"}}
+<ul>
+{{range .}}
+    <li>
+        <strong>{{.Name}}</strong>
+
+        {{range $i, $artist := .Artists}}
+            {{- if $i -}}, {{end -}}{{- $artist.Name}}
+        {{end}}
+    </li>
+{{else}}
+    <li>Nenhuma faixa encontrada</li>
+{{end}}
+</ul>
+{{end}}

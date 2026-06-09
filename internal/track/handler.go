@@ -1,6 +1,7 @@
 package track
 
 import (
+	"html/template"
 	"log/slog"
 	"net/http"
 
@@ -9,13 +10,30 @@ import (
 )
 
 type handler struct {
+	tmpl    *template.Template
 	service core.TrackService
 }
 
-func NewHandler(service core.TrackService) *handler {
+func NewHandler(
+	tmpl *template.Template,
+	service core.TrackService,
+) *handler {
 	return &handler{
+		tmpl:    tmpl,
 		service: service,
 	}
+}
+
+type TrackPage struct {
+	Title string
+}
+
+func (h *handler) SearchIndex(w http.ResponseWriter, r *http.Request) {
+	data := TrackPage{
+		Title: "Buscar",
+	}
+
+	h.tmpl.ExecuteTemplate(w, "track.html", data)
 }
 
 func (h *handler) SearchByName(w http.ResponseWriter, r *http.Request) {
@@ -42,5 +60,5 @@ func (h *handler) SearchByName(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	util.RespRaw(w, http.StatusOK, tracks)
+	h.tmpl.ExecuteTemplate(w, "track-result", tracks)
 }

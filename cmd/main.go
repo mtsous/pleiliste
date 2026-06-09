@@ -11,6 +11,7 @@ import (
 	"github.com/mtsous/pleiliste/internal/spotify"
 	"github.com/mtsous/pleiliste/internal/track"
 	"github.com/mtsous/pleiliste/internal/util"
+	"github.com/mtsous/pleiliste/web"
 )
 
 func main() {
@@ -22,17 +23,23 @@ func main() {
 
 	sessionStore := session.NewStore(3600)
 
-	spotify := spotify.NewClient(env, client, sessionStore)
+	spotifyClient := spotify.NewClient(env, client, sessionStore)
 
-	trackService := track.NewService(spotify)
+	trackService := track.NewService(spotifyClient)
 
-	authHandler := auth.NewHandler(spotify, sessionStore)
-	trackHandler := track.NewHandler(trackService)
+	tmpl := web.HandleTmpl()
+
+	authHandler := auth.NewHandler(spotifyClient, sessionStore)
+	trackHandler := track.NewHandler(tmpl, trackService)
 
 	mux := http.NewServeMux()
+
 	mux.HandleFunc("GET /auth/spotify", authHandler.HandleSpotify)
 	mux.HandleFunc("GET /auth/spotify/callback", authHandler.HandleSpotifyCallback)
+	mux.HandleFunc("GET /", trackHandler.SearchIndex)
 	mux.HandleFunc("GET /tracks", trackHandler.SearchByName)
+
+	web.HandleStatic(mux)
 
 	port := os.Getenv("PORT")
 	if port == "" {
