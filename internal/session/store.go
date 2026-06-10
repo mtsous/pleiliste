@@ -1,7 +1,10 @@
 package session
 
 import (
+	"encoding/json"
+	"log"
 	"log/slog"
+	"os"
 	"sync"
 	"time"
 
@@ -21,6 +24,15 @@ func NewStore(ttl time.Duration) *Store {
 	}
 
 	go s.cleanup()
+
+	b, err := os.ReadFile(".sessions.json")
+	if err != nil {
+		log.Fatalf("failed with err %s", err.Error())
+	}
+
+	if err := json.Unmarshal(b, &s.data); err != nil {
+		slog.Error("failed to unmarshal sessions", "err", err)
+	}
 
 	return s
 }
@@ -44,6 +56,16 @@ func (s *Store) Set(key string, sess *core.Session) {
 	defer s.mu.Unlock()
 
 	s.data[key] = sess
+
+	b, err := json.Marshal(s.data)
+	if err != nil {
+		slog.Error("failed to marshal sessions", "err", err)
+		return
+	}
+
+	if err := os.WriteFile(".sessions.json", b, 0600); err != nil {
+		slog.Error("failed to write sessions", "err", err)
+	}
 }
 
 func (s *Store) Get(key string) (*core.Session, error) {
