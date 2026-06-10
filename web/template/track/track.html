@@ -1,24 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="/static/favicon.png">
-    <script src="/static/htmx.min.js"></script>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+    <link rel="icon"
+        type="image/x-icon"
+        href="/static/favicon.png">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Irish+Grover&family=Outfit:wght@100..900&display=swap"
+        rel="stylesheet">
     <title>{{.Title}} - Pleiliste</title>
+    <script src="/static/htmx.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <label for="#search-input">Buscar</label>
-    <input
-        id="search-input"
-        type="text"
-        name="name"
-        hx-get="/tracks"
-        hx-trigger="keyup changed delays:1s"
-        hx-target="#result"
-        placeholder="Digite o nome de uma faixa..."
-    >
 
-    <div id="result"></div>
+<body
+    class="font-[Outfit] min-h-screen p-4 bg-gradient-to-br from-amber-50 via-blue-100 to-purple-200">
+    <main class="w-full max-w-2xl mx-auto">
+        <section class="flex flex-col items-center gap-4"> <label
+                for="search-input"
+                class="text-center font-extrabold text-3xl sm:text-4xl md:text-5xl">
+                Crie sua&nbsp;
+                <span
+                    class="font-['Irish_Grover'] text-3xl sm:text-4xl md:text-5xl">
+                    <span class="text-purple-700">P</span><span
+                        class="text-amber-500">l</span><span
+                        class="text-indigo-500">e</span><span
+                        class="text-emerald-600">i</span><span
+                        class="text-rose-700">l</span><span
+                        class="text-violet-800">i</span><span
+                        class="text-indigo-500">s</span><span
+                        class="text-orange-600">t</span><span
+                        class="text-purple-500">e</span></span>
+            </label>
+            <div class="text-sm sm:text-base text-center text-gray-500 max-w-md">
+                Escolha uma música <br> e crie uma playlist pra combinar.
+            </div>
+            <input id="search-input"
+                class="w-full border rounded-xl p-2 px-4 focus:outline-none 
+                focus:ring-2 focus:ring-indigo-700 shadow-lg
+                bg-gradient-to-tl from-red-50/20 to-pink-200/25 backdrop-blur-sm"
+                type="text"
+                name="name"
+                hx-get="/tracks"
+                hx-trigger="keyup changed delays:1s"
+                hx-target="#result"
+                placeholder="Escolha uma música...">
+        </section>
+        <section id="result"
+            class="mt-2"></section>
+    </main>
 </body>
+
 </html>

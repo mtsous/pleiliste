@@ -1,15 +1,22 @@
 {{define "track-result"}}
-<ul>
-{{range .}}
-    <li>
-        <strong>{{.Name}}</strong>
+<ul class="flex flex-col gap-2 mt-4">
+    {{range .}}
+    <li class="flex flex-col p-1 px-4 border border-yellow-50 
+    border-opacity-30 bg-opacity-30 bg-yellow-50
+    hover:bg-opacity-60 shadow-sm">
+        <div class="block font-bold text-ellipsis truncate">
+            {{.Name}}
+        </div>
 
-        {{range $i, $artist := .Artists}}
-            {{- if $i -}}, {{end -}}{{- $artist.Name}}
-        {{end}}
+        <div class="text-sm sm:text-base text-gray-600 truncate">
+            {{range $i, $artist := .Artists}}
+            {{- if $i -}},&nbsp;{{- end -}}{{- $artist.Name -}}
+            {{end}}
+
+        </div>
     </li>
-{{else}}
+    {{else}}
     <li>Nenhuma faixa encontrada</li>
-{{end}}
+    {{end}}
 </ul>
 {{end}}
