@@ -194,6 +194,7 @@ func (c *Client) decodeTracks(body io.ReadCloser) (*core.Tracks, error) {
 		track := core.Track{
 			ID:   v.ID,
 			Name: v.Name,
+			ISRC: v.ExternalIDs.ISRC,
 		}
 
 		for j, vv := range v.Artists {

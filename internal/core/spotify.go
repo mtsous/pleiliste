@@ -20,6 +20,9 @@ type SpotifyTracks struct {
 				ID   string `json:"id"`
 				Name string `json:"name"`
 			} `json:"artists"`
+			ExternalIDs struct {
+				ISRC string `json:"isrc"`
+			} `json:"external_ids"`
 		} `json:"items"`
 	} `json:"tracks"`
 }

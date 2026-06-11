@@ -5,12 +5,12 @@ import (
 	"html/template"
 )
 
-//go:embed template/**/*.html
+//go:embed template/*.html
 var templateFS embed.FS
 
 func HandleTmpl() *template.Template {
 	return template.Must(template.ParseFS(
 		templateFS,
-		"template/**/*.html",
+		"template/*.html",
 	))
 }

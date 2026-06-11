@@ -7,6 +7,7 @@ import (
 type Track struct {
 	ID      string
 	Name    string
+	ISRC    string
 	Artists Artists
 }
 

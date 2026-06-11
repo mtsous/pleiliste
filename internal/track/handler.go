@@ -30,7 +30,7 @@ type IndexPage struct {
 
 func (h *handler) SearchIndex(w http.ResponseWriter, r *http.Request) {
 	data := IndexPage{
-		Title: "Buscar",
+		Title: "Escolha uma música",
 	}
 
 	h.tmpl.ExecuteTemplate(w, "index.html", data)
