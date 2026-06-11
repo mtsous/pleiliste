@@ -24,16 +24,16 @@ func NewHandler(
 	}
 }
 
-type TrackPage struct {
+type IndexPage struct {
 	Title string
 }
 
 func (h *handler) SearchIndex(w http.ResponseWriter, r *http.Request) {
-	data := TrackPage{
+	data := IndexPage{
 		Title: "Buscar",
 	}
 
-	h.tmpl.ExecuteTemplate(w, "track.html", data)
+	h.tmpl.ExecuteTemplate(w, "index.html", data)
 }
 
 func (h *handler) SearchByName(w http.ResponseWriter, r *http.Request) {
@@ -60,5 +60,5 @@ func (h *handler) SearchByName(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	h.tmpl.ExecuteTemplate(w, "track-result", tracks)
+	h.tmpl.ExecuteTemplate(w, "tracks", tracks)
 }

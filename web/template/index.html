@@ -35,7 +35,8 @@
                         class="text-orange-600">t</span><span
                         class="text-purple-500">e</span></span>
             </label>
-            <div class="text-sm sm:text-base text-center text-gray-500 max-w-md">
+            <div
+                class="text-sm sm:text-base text-center text-gray-500 max-w-md">
                 Escolha uma música <br> e crie uma playlist pra combinar.
             </div>
             <input id="search-input"
@@ -45,13 +46,20 @@
                 type="text"
                 name="name"
                 hx-get="/tracks"
-                hx-trigger="keyup changed delays:1s"
-                hx-target="#result"
+                hx-trigger="keyup changed delay:1s"
+                hx-target="#tracks"
                 placeholder="Escolha uma música...">
         </section>
-        <section id="result"
+        <section id="tracks"
             class="mt-2"></section>
     </main>
+
+    <script>
+        document.body.addEventListener("htmx:syntax:error", function (e) {
+            console.log("Element:", e.target);
+            console.log("Details:", e.detail);
+        });    
+    </script>
 </body>
 
 </html>

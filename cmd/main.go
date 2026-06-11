@@ -39,6 +39,8 @@ func main() {
 	mux.HandleFunc("GET /", trackHandler.SearchIndex)
 	mux.HandleFunc("GET /tracks", trackHandler.SearchByName)
 
+	handler := auth.SessionMiddleware(sessionStore)(mux)
+
 	web.HandleStatic(mux)
 
 	port := os.Getenv("PORT")
@@ -49,7 +51,7 @@ func main() {
 	addr := "127.0.0.1:" + port
 	log.Printf("server listening on http://%s", addr)
 
-	if err := http.ListenAndServe(addr, mux); err != nil {
+	if err := http.ListenAndServe(addr, handler); err != nil {
 		log.Fatal(err)
 	}
 }
