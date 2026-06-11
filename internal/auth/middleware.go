@@ -20,6 +20,7 @@ func SessionMiddleware(store *session.Store) func(http.Handler) http.Handler {
 				"/auth/spotify",
 				"/auth/spotify/callback":
 				next.ServeHTTP(w, r)
+				return
 			}
 
 			cookie, err := r.Cookie("session_id")
